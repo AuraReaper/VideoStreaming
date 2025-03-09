@@ -171,33 +171,6 @@ docker-compose up
 - **Movie Catalog Service**: `http://localhost:8080/catalog`
 - **Movie Streaming Service**: `http://localhost:8080/stream`
 
-## 📚 API Documentation
-
-### Movie Catalog Service
-
-- `GET /catalog`: Retrieve all available movies
-- `GET /catalog/{id}`: Get details for a specific movie
-- `GET /catalog/genre/{genre}`: Filter movies by genre
-
-### Movie Streaming Service
-
-- `GET /stream/{id}`: Stream a specific video
-- `GET /stream/{id}/metadata`: Get technical metadata for a video
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ---
 
 Developed with ❤️ by [Your Name]
