@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Library</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            margin: 20px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .video-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .description {
+            margin-top: 10px;
+            color: #555;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="video-container"></div>
+<div id="error" class="error-message"></div>
+
+<script>
+    async function fetchVideos() {
+        const errorMessage = document.getElementById("error");
+        errorMessage.textContent = "";
+        try {
+            let response = await fetch('http://localhost:8080/movie-info/list');
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            let videos = await response.json();
+
+            if (!Array.isArray(videos)) {
+                throw new Error("Invalid response format: Expected an array");
+            }
+
+            const container = document.getElementById('video-container');
+            container.innerHTML = '';
+
+            videos.forEach(video => {
+                if (!video.id || !video.title || !video.genre || !video.path) {
+                    console.warn("Skipping invalid video entry:", video);
+                    return;
+                }
+
+                const card = document.createElement('div');
+                card.classList.add('card');
+
+                card.innerHTML = `
+                        <div class="video-title">${video.title}</div>
+                        <video controls poster="http://localhost:8080/stream/with-id/${video.id}#t=2" preload="metadata">
+                            <source src="http://localhost:8080/stream/with-id/${video.id}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="description">Genre: ${video.genre}</div>
+                    `;
+
+                container.appendChild(card);
+            });
+        } catch (error) {
+            console.error("Error fetching videos:", error);
+            errorMessage.textContent = "Failed to load videos. Please check the server and try again.";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchVideos);
+</script>
+</body>
+</html>
+
+<!-- i genrated this with the help of chat-gpt -->
