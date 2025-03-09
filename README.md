@@ -27,7 +27,7 @@ The system provides a simple and intuitive interface for users to browse and str
 
 ## 🏗️ Architecture
 
-![Architecture Diagram](https://via.placeholder.com/800x400?text=VideoStreaming+Architecture+Diagram)
+![Architecture Diagram](./Architecture.png)
 
 The application follows a microservices architecture with the following components:
 
